@@ -6,9 +6,12 @@
     <title>Excel column incrementer</title>
     <link rel="stylesheet" href="master.css">
 </head>
-    <input type="submit" value="+" id="btn_add" class="btn_submit">
-    <input type="submit" value="Reset" id="btn_reset" class="btn_submit">
-    <input type="submit" value="Generate" id="btn_generate" class="btn_submit">
+    <div class="controls_container">
+        <input type="submit" value="+" id="btn_add" class="btn_submit">
+        <input type="submit" value="Reset" id="btn_reset" class="btn_submit">
+        <input type="submit" value="Generate" id="btn_generate" class="btn_submit">
+        <img src="trash-can.png" alt="Trash can Icon" id="trash_icon" ondrop="drop(event)" ondragover="allowDrop(event)">
+    </div>
     <br/>
     <br/>
     <div id="inputs_container">

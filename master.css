@@ -1,6 +1,8 @@
 * {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+    padding: 0;
+    margin: 3px;
 }
 
 
@@ -57,4 +59,17 @@ td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
+}
+
+#trash_icon {
+    background-color: white;
+    margin-left: auto;
+}
+
+.controls_container {
+    display:  flex;
+}
+
+.controls_container input {
+    margin-right: 10px;
 }

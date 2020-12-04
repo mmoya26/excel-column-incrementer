@@ -3,7 +3,7 @@ let input_div_container = document.getElementById("inputs_container");
 let containerNodesCount = input_div_container.childElementCount;
 let choosenCharacter;
 let generatedTable = document.getElementById("generated_table");
-let alreadyChoosen = false
+let alreadyChoosen = false;
 
 btn_add.addEventListener("click", (event) =>  {
     containerNodesCount = input_div_container.childElementCount + 1;
@@ -11,6 +11,8 @@ btn_add.addEventListener("click", (event) =>  {
 
     inputBox.setAttribute("class", "input_square");
     inputBox.setAttribute("maxlength", "1");
+    inputBox.setAttribute("draggable", "true");
+    inputBox.setAttribute("ondragstart", "drag(event)")
     inputBox.setAttribute("id", `input_box_${containerNodesCount}`);
     inputBox.addEventListener("input", (event) => {
 
@@ -82,3 +84,18 @@ btn_generate.addEventListener("click", (event) => {
     }
 });
 
+// DRAG AND DROP FUNCTIONALITY
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+  ev.target.removeChild(ev.target.firstChild);
+}
