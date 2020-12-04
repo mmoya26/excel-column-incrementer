@@ -67,24 +67,55 @@ btn_reset.addEventListener("click", (event) => {
     while(generatedTable.firstChild) {
         generatedTable.removeChild(generatedTable.firstChild);
     }
+
+    alreadyChoosen = false; 
 });
 
 
 let btn_generate = document.getElementById("btn_generate");
+
 btn_generate.addEventListener("click", (event) => {
     let counter = 5;
-    
+    let inputsCounter = input_div_container.childElementCount;
+    let childNodesArray = input_div_container.childNodes;
+    let inputsOnlyArray = [];
+    let inputsCharArray = [];
+    let theFinalString = "";
+    let currentSelectedValue;
+    let selectedIndex;
+
+    for (i = 0; i < inputsCounter; i++) {
+        if (childNodesArray[i].tagName == "INPUT") {
+            inputsOnlyArray.push(childNodesArray[i]);
+        } else {
+            inputsCounter++;
+        }
+    }
+
+    for (i = 0; i < inputsOnlyArray.length; i++) {
+        if (inputsOnlyArray[i].classList.contains("selected")) {
+            let idNumber = parseInt(inputsOnlyArray[i].getAttribute("id").replace( /^\D+/g, ''), 10) - 1;
+            currentSelectedValue = inputsOnlyArray[i].value;
+            selectedIndex = idNumber;
+        }
+        inputsCharArray.push(inputsOnlyArray[i].value);
+    }
+
+    for (i = 0; i < inputsCharArray.length; i++) {
+        theFinalString += inputsCharArray[i];
+    }
 
     for (i = 0; i < counter; i++) {
         let tableRow = document.createElement("tr") 
         let tableData = document.createElement("td");
-        tableData.innerHTML = "XD";
+        tableData.innerHTML = theFinalString.replaceAt(selectedIndex, currentSelectedValue);
         tableRow.appendChild(tableData);
         generatedTable.appendChild(tableRow);
+        currentSelectedValue++;
     }
 });
 
-// DRAG AND DROP FUNCTIONALITY
+// DRAG AND DROP FUNCTIONALITYGI
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -97,5 +128,29 @@ function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   ev.target.appendChild(document.getElementById(data));
+
+  if (ev.target.firstChild.classList.contains("selected")) {
+    alreadyChoosen = false;
+  }
+
   ev.target.removeChild(ev.target.firstChild);
+  renameInputBoxes();
+}
+
+function renameInputBoxes() {
+    let counter = input_div_container.childElementCount;
+    let childNodesArray = input_div_container.childNodes;
+    let idCounter = 1
+    for (i = 0; i < counter; i++) {
+        if (childNodesArray[i].tagName == "INPUT") {
+            childNodesArray[i].setAttribute("id", `input_box_${idCounter}`);
+            idCounter++;
+        } else {
+            counter++;
+        }
+    }
+}
+
+String.prototype.replaceAt = function(index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
