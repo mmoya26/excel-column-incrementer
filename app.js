@@ -1,8 +1,8 @@
-let btn_generate = document.getElementById("btn_generate")
+let btn_add = document.getElementById("btn_add")
 let input_div_container = document.getElementById("inputs_container");
 let containerNodesCount = input_div_container.childElementCount;
 
-btn_generate.addEventListener("click", (event) =>  {
+btn_add.addEventListener("click", (event) =>  {
     containerNodesCount = input_div_container.childElementCount + 1;
     let inputBox = document.createElement("input");
 
