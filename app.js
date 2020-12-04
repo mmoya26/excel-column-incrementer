@@ -75,7 +75,7 @@ btn_reset.addEventListener("click", (event) => {
 let btn_generate = document.getElementById("btn_generate");
 
 btn_generate.addEventListener("click", (event) => {
-    let counter = 5;
+    let counter = 10;
     let inputsCounter = input_div_container.childElementCount;
     let childNodesArray = input_div_container.childNodes;
     let inputsOnlyArray = [];
@@ -108,7 +108,8 @@ btn_generate.addEventListener("click", (event) => {
     for (i = 0; i < counter; i++) {
         let tableRow = document.createElement("tr") 
         let tableData = document.createElement("td");
-        tableData.innerHTML = theFinalString.replaceAt(selectedIndex, currentSelectedValue);
+        let stringInsert = theFinalString.replaceAt(selectedIndex, currentSelectedValue);
+        tableData.innerHTML = stringInsert;
         tableRow.appendChild(tableData);
         generatedTable.appendChild(tableRow);
         currentSelectedValue++;
@@ -152,5 +153,5 @@ function renameInputBoxes() {
 }
 
 String.prototype.replaceAt = function(index, replacement) {
-    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+    return this.substr(0, index) + replacement;
 }
