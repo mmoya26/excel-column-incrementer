@@ -29,6 +29,13 @@ input {
     font-size: 18px;
     color: black;
     margin-right: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.selected {
+    background-color: #3BC14A;
+    color: white;
 }
 
 
@@ -38,4 +45,16 @@ input {
     padding: 20px;
     outline: none;
     cursor: pointer;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
 }
