@@ -11,6 +11,8 @@ let choosenCharacter;
 
 btn_generate.disabled = true;
 
+btn_reset.addEventListener("click", reset);
+
 btn_add.addEventListener("click", (event) =>  {
     containerNodesCount = input_div_container.childElementCount + 1;
     let inputBox = document.createElement("input");
@@ -38,6 +40,12 @@ btn_add.addEventListener("click", (event) =>  {
     inputBox.addEventListener("dblclick", (event) => {
         console.log("Double clicked...");
 
+        if (isNaN(inputBox.value)) {
+            alert("Selected variable must be a number!");
+            reset();
+            return;
+        }
+
         if (alreadyChoosen) {
             if (event.target.classList.contains("selected")) {
                 inputBox.classList.remove("selected");
@@ -61,21 +69,6 @@ btn_add.addEventListener("click", (event) =>  {
     });
 
     input_div_container.appendChild(inputBox);
-});
-
-btn_reset.addEventListener("click", (event) => {
-
-    // REMOVE ALL INPUT BOXES
-    while(input_div_container.firstChild) {
-        input_div_container.removeChild(input_div_container.firstChild);
-    }
-
-    // REMOVE ALL TABLE ROWS
-    while(generatedTable.firstChild) {
-        generatedTable.removeChild(generatedTable.firstChild);
-    }
-
-    alreadyChoosen = false; 
 });
 
 btn_generate.addEventListener("click", (event) => {
@@ -161,6 +154,20 @@ function renameInputBoxes() {
     }
 }
 // END - DRAG AND DROP FUNCTIONALITY
+
+function reset() {
+    // REMOVE ALL INPUT BOXES
+    while(input_div_container.firstChild) {
+        input_div_container.removeChild(input_div_container.firstChild);
+    }
+
+    // REMOVE ALL TABLE ROWS
+    while(generatedTable.firstChild) {
+        generatedTable.removeChild(generatedTable.firstChild);
+    }
+
+    alreadyChoosen = false; 
+}
 
 String.prototype.replaceAt = function(index, replacement) {
     return this.substr(0, index) + replacement;
