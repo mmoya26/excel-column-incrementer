@@ -3,11 +3,9 @@ let btn_generate = document.getElementById("btn_generate");
 let btn_reset = document.getElementById("btn_reset");
 
 let input_div_container = document.getElementById("inputs_container");
-let containerNodesCount = input_div_container.childElementCount;
 let generatedTable = document.getElementById("generated_table");
 
 let alreadyChoosen = false;
-let alreadyGenerated = false;
 let choosenCharacter;
 
 btn_generate.disabled = true;
@@ -15,7 +13,7 @@ btn_generate.disabled = true;
 btn_reset.addEventListener("click", reset);
 
 btn_add.addEventListener("click", (event) =>  {
-    containerNodesCount = input_div_container.childElementCount + 1;
+    let containerNodesCount = input_div_container.childElementCount + 1;
     let inputBox = document.createElement("input");
 
     inputBox.setAttribute("class", "input_square");
@@ -41,9 +39,10 @@ btn_add.addEventListener("click", (event) =>  {
     inputBox.addEventListener("dblclick", (event) => {
         console.log("Double clicked...");
 
-        if (isNaN(inputBox.value) && !alreadyChoosen) {
-            alert("Selected variable must be a number!");
-            reset();
+        if (isNaN(inputBox.value) && !alreadyChoosen || inputBox.value == "") {
+            alert("Selected variable must be a number and cannot be empty");
+            inputBox.focus();
+            inputBox.value = "";
             return;
         }
 
@@ -74,10 +73,6 @@ btn_add.addEventListener("click", (event) =>  {
 
 btn_generate.addEventListener("click", (event) => {
 
-    if (alreadyGenerated) {
-        return;
-    }
-
     let counter = 10;
     let inputsCounter = input_div_container.childElementCount;
     let childNodesArray = input_div_container.childNodes;
@@ -86,6 +81,15 @@ btn_generate.addEventListener("click", (event) => {
     let theFinalString = "";
     let currentSelectedValue;
     let selectedIndex;
+    
+    // REMOVE ALL TABLE ROWS
+    while(generatedTable.hasChildNodes()) {
+        if (generatedTable.childNodes.length == 2) {
+            break;
+        }
+
+        generatedTable.removeChild(generatedTable.lastChild);
+    }
 
     for (i = 0; i < inputsCounter; i++) {
         if (childNodesArray[i].tagName == "INPUT") {
@@ -180,7 +184,6 @@ function reset() {
     }
 
     alreadyChoosen = false;
-    alreadyGenerated = false;
     btn_generate.disabled = true;
 }
 
