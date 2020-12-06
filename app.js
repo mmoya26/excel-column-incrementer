@@ -40,7 +40,7 @@ btn_add.addEventListener("click", (event) =>  {
     inputBox.addEventListener("dblclick", (event) => {
         console.log("Double clicked...");
 
-        if (isNaN(inputBox.value)) {
+        if (isNaN(inputBox.value) && !alreadyChoosen) {
             alert("Selected variable must be a number!");
             reset();
             return;
