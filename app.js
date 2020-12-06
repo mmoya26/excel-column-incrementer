@@ -1,9 +1,15 @@
-let btn_add = document.getElementById("btn_add")
+let btn_add = document.getElementById("btn_add");
+let btn_generate = document.getElementById("btn_generate");
+let btn_reset = document.getElementById("btn_reset");
+
 let input_div_container = document.getElementById("inputs_container");
 let containerNodesCount = input_div_container.childElementCount;
-let choosenCharacter;
 let generatedTable = document.getElementById("generated_table");
+
 let alreadyChoosen = false;
+let choosenCharacter;
+
+btn_generate.disabled = true;
 
 btn_add.addEventListener("click", (event) =>  {
     containerNodesCount = input_div_container.childElementCount + 1;
@@ -36,6 +42,7 @@ btn_add.addEventListener("click", (event) =>  {
             if (event.target.classList.contains("selected")) {
                 inputBox.classList.remove("selected");
                 alreadyChoosen = false;
+                btn_generate.disabled = true;
             }
             return
         }
@@ -43,10 +50,12 @@ btn_add.addEventListener("click", (event) =>  {
         if (inputBox.classList.contains("selected")) {
             inputBox.classList.remove("selected");
             alreadyChoosen = false;
+            btn_generate.disabled = true;
         }   
         else {
             inputBox.classList.add("selected");
             alreadyChoosen = true;
+            btn_generate.disabled = false;
         }
         
     });
@@ -54,13 +63,11 @@ btn_add.addEventListener("click", (event) =>  {
     input_div_container.appendChild(inputBox);
 });
 
-let btn_reset = document.getElementById("btn_reset");
-
 btn_reset.addEventListener("click", (event) => {
 
     // REMOVE ALL INPUT BOXES
     while(input_div_container.firstChild) {
-        input_div_container.removeChild(input_div_container.firstChild)
+        input_div_container.removeChild(input_div_container.firstChild);
     }
 
     // REMOVE ALL TABLE ROWS
@@ -70,9 +77,6 @@ btn_reset.addEventListener("click", (event) => {
 
     alreadyChoosen = false; 
 });
-
-
-let btn_generate = document.getElementById("btn_generate");
 
 btn_generate.addEventListener("click", (event) => {
     let counter = 10;
@@ -109,6 +113,10 @@ btn_generate.addEventListener("click", (event) => {
         let tableRow = document.createElement("tr") 
         let tableData = document.createElement("td");
         let stringInsert = theFinalString.replaceAt(selectedIndex, currentSelectedValue);
+
+        for (j = selectedIndex + 1; j < inputsCharArray.length; j++) {
+            stringInsert += inputsCharArray[j];
+        }
         tableData.innerHTML = stringInsert;
         tableRow.appendChild(tableData);
         generatedTable.appendChild(tableRow);
@@ -116,7 +124,7 @@ btn_generate.addEventListener("click", (event) => {
     }
 });
 
-// DRAG AND DROP FUNCTIONALITYGI
+// START - DRAG AND DROP FUNCTIONALITY
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -132,6 +140,7 @@ function drop(ev) {
 
   if (ev.target.firstChild.classList.contains("selected")) {
     alreadyChoosen = false;
+    btn_generate.disabled = true;
   }
 
   ev.target.removeChild(ev.target.firstChild);
@@ -151,6 +160,7 @@ function renameInputBoxes() {
         }
     }
 }
+// END - DRAG AND DROP FUNCTIONALITY
 
 String.prototype.replaceAt = function(index, replacement) {
     return this.substr(0, index) + replacement;
