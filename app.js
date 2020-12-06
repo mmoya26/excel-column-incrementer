@@ -7,6 +7,7 @@ let containerNodesCount = input_div_container.childElementCount;
 let generatedTable = document.getElementById("generated_table");
 
 let alreadyChoosen = false;
+let alreadyGenerated = false;
 let choosenCharacter;
 
 btn_generate.disabled = true;
@@ -72,6 +73,11 @@ btn_add.addEventListener("click", (event) =>  {
 });
 
 btn_generate.addEventListener("click", (event) => {
+
+    if (alreadyGenerated) {
+        return;
+    }
+
     let counter = 10;
     let inputsCounter = input_div_container.childElementCount;
     let childNodesArray = input_div_container.childNodes;
@@ -115,6 +121,8 @@ btn_generate.addEventListener("click", (event) => {
         generatedTable.appendChild(tableRow);
         currentSelectedValue++;
     }
+
+    alreadyGenerated = true;
 });
 
 // START - DRAG AND DROP FUNCTIONALITY
@@ -156,17 +164,24 @@ function renameInputBoxes() {
 // END - DRAG AND DROP FUNCTIONALITY
 
 function reset() {
+
     // REMOVE ALL INPUT BOXES
     while(input_div_container.firstChild) {
         input_div_container.removeChild(input_div_container.firstChild);
     }
 
     // REMOVE ALL TABLE ROWS
-    while(generatedTable.firstChild) {
-        generatedTable.removeChild(generatedTable.firstChild);
+    while(generatedTable.hasChildNodes()) {
+        if (generatedTable.childNodes.length == 2) {
+            break;
+        }
+
+        generatedTable.removeChild(generatedTable.lastChild);
     }
 
-    alreadyChoosen = false; 
+    alreadyChoosen = false;
+    alreadyGenerated = false;
+    btn_generate.disabled = true;
 }
 
 String.prototype.replaceAt = function(index, replacement) {
