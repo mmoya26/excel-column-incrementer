@@ -190,3 +190,9 @@ function reset() {
 String.prototype.replaceAt = function(index, replacement) {
     return this.substr(0, index) + replacement;
 }
+
+
+document.getElementById("btn_download").addEventListener("click", (event) => {
+    var table2excel = new Table2Excel();
+    table2excel.export(document.getElementById("generated_table"));
+});
